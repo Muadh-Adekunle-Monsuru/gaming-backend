@@ -14,7 +14,6 @@ app.get('/orders', (req, res) => {
 
 app.post('/orders', (req, response) => {
 	let newOrder = req.body;
-	console.log(newOrder);
 	const newO = new Order(newOrder);
 	newO.save().then((res) => response.json(res));
 });
