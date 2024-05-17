@@ -18,6 +18,18 @@ app.post('/orders', (req, response) => {
 	newO.save().then((res) => response.json(res));
 });
 
+app.delete('/orders/:id', async (req, response) => {
+	try {
+		const order = await Order.findByIdAndDelete(req.params.id);
+		if (!order) {
+			return response.status(404).json({ message: 'Order not found' });
+		}
+		response.json({ message: 'Order deleted successfully' });
+	} catch (e) {
+		console.log('Error trying to delete', e);
+		response.status(500).json({ message: e.message });
+	}
+});
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
